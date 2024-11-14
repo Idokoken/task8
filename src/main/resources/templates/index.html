@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" type="image/x-icon" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>students</title>
+</head>
+<body>
+<!--header section-->
+<header th:replace="fragments/header :: header">...</header>
+
+<!--main section-->
+<main>
+    <div class="container">
+        <section class="hero">
+            <h2 class="text-bold welcome">Welcome</h2>
+            <div class="add">
+                <a th:href="@{/post/create}" class="btn btn-primary my-2">Add Post</a>
+            </div>
+        </section>
+        <section>
+
+            <table class="table table-dark table-striped post" th:if="${students}">
+                <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Cover</th>
+                    <th scope="col" colspan="2">Title</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post : ${posts}">
+                    <td th:text="${post.postId}">post id</td>
+                    <th scope="row"><img th:src="@{${post.imgCoverUrl}}" alt="cover"></th>
+                    <!--                        <th scope="row"><img th:src="*{'data:image/jpeg;base64,' + {post.imgCoverUrl}}" alt="cover"></th>-->
+                    <td colspan="2" th:text="${post.title}">post title</td>
+                    <td>
+                        <a class="btn btn-secondary" th:href="@{/post/edit/{edit}(edit=${post.postId})}"
+                        ><i class="fa-regular fa-pen-to-square"></i
+                        ></a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{/post/delete/{del}(del=${post.postId})}"
+                        ><i class="fa-solid fa-trash-can"></i
+                        ></a>
+                    </td>
+                    <td th:text="${#temporals.format(post.postDate, 'dd, MMM yy')}">Post Date</td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </section>
+    </div>
+</main>
+
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
